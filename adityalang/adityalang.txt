@@ -1,0 +1,24 @@
+import streamlit as st
+from langchain.chains import LLMChain
+from langchain.prompts import PromptTemplate
+from langchain.llms import OpenAI
+
+# Initialize LangChain components
+api_key = "sk-proj-7rnmtOIfaUhfAty8gEYGT3BlbkFJKRPJ2C3ivaUXr00h1g1K"
+llm = OpenAI(api_key=api_key)
+template = PromptTemplate(input_variables=["question"], template="Q: {question}\nA:")
+
+# Update to correct class initialization
+conversation_chain = LLMChain(prompt=template, llm=llm)
+
+# Streamlit app
+st.title("Q&A System using LangChain and Streamlit")
+
+st.write("Enter a question below to get an answer:")
+
+question = st.text_input("Your question:")
+
+if question:
+    answer = conversation_chain.run({"question": question})
+    st.write("Answer:")
+    st.write(answer)
